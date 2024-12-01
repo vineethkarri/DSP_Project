@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Add any additional styles or scripts here -->
+</head>
+<body>
+
+    <h1 style="color: blue;text-align: center;">Welcome to the Health Dashboard</h1>
+    <a href="{{ url_for('main.logout') }}" style="margin-left: 900px;font-size: 15px">Logout</a>
+
+    <div>
+        <h2>Your Health Data</h2>
+
+        {% if current_user.group == 'H' %}
+
+            <div style="color: blue">
+                <h2>Actions</h2>
+                <a href="{{ url_for('main.add_patient') }}">Add New Patient</a>
+            </div>
+            <!-- Display table for Group H -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>first_name</th>
+                        <th>last_name</th>
+                        <th>age</th>
+                        <th>gender</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Health History</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Use Jinja or any templating engine to loop through the data and display it -->
+                    {% for record in health_data %}
+                        <tr>
+                            <td>{{ record.first_name }}</td>
+                            <td>{{ record.last_name }}</td>
+                            <td>{{ record.age }}</td>
+                            <td>{{ record.gender }}</td>
+                            <td>{{ record.weight }}</td>
+                            <td>{{ record.height }}</td>
+                            <td>{{ record.health_history }}</td>
+                            <!-- Add other fields as needed -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% elif current_user.group == 'R' %}
+            <!-- Display table for Group R -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>age</th>
+                        <th>gender</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Health History</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Use Jinja or any templating engine to loop through the data and display it -->
+                    {% for record in health_data %}
+                        <tr>
+                           <td>{{ record.age }}</td>
+                            <td>{{ record.gender }}</td>
+                            <td>{{ record.weight }}</td>
+                            <td>{{ record.height }}</td>
+                            <td>{{ record.health_history }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+            <p>Invalid user group.</p>
+
+        {% endif %}
+    </div>
+</body>
+</html>
